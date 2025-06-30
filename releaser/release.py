@@ -5,7 +5,7 @@ import logging
 import traceback
 import dotenv
 
-from releaser.utilities import github_util, helpers, log_util, git_util, file_util, zip_util, errors_util
+from releaser.utilities import github_util, helpers, log_util, git_util, file_util, zip_util, errors_util, time_util
 import releaser.constants as constants
 
 # Logging
@@ -36,7 +36,7 @@ def _buildFrontend(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.FRONTEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.FRONTEND_CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_name", "-n", help='The name to use. Note that the name will have - yyyymmdd appended to it.', default=constants.FRONTEND_RELEASE_NAME) 
+    runner.add_argument("--release_name", "-n", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME) 
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.set_defaults(func=_buildCommand)
 
@@ -48,7 +48,7 @@ def _buildBackend(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.BACKEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.BACKEND_CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_name", "-n", help='The name to use. Note that the name will have - yyyymmdd appended to it.', default=constants.BACKEND_RELEASE_NAME) 
+    runner.add_argument("--release_name", "-n", help='The name to use.', default=constants.BACKEND_RELEASE_NAME) 
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.set_defaults(func=_buildCommand)
 
@@ -60,7 +60,7 @@ def _build(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default="main")
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_name", "-n", help='The name to use. Note that the name will have - yyyymmdd appended to it.', default="archive.zip") 
+    runner.add_argument("--release_name", "-n", help='The name to use.', default=f"archive-{time_util.getCurrentDateTimeString(format="%Y%m%d")}.zip") 
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.set_defaults(func=_buildCommand)
 

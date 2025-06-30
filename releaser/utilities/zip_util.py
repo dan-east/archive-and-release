@@ -3,7 +3,7 @@ from pathlib import Path
 import zipfile
 from zipfile import ZipFile
 from . import file_util
-from .errors_util import ZipError
+from .errors_util import UtilityError
 
 _logger = logging.getLogger(__name__)
 
@@ -129,3 +129,6 @@ def _createZipFileForRead(path:str) -> ZipFile :
 def _createZipFileForWrite(path:str) -> ZipFile :
     return ZipFile(path, "w", zipfile.ZIP_DEFLATED)
 
+
+class ZipError(UtilityError) :
+    """Raised by the zip utility functions to indicate some issue."""

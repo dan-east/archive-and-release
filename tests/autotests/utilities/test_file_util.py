@@ -1,7 +1,7 @@
 import pytest
 import tempfile
 import os
-from releaser.utilities import file_util, errors_util
+from releaser.utilities import file_util
 
 def test_mkdir_and_exists():
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -97,7 +97,7 @@ def test_readFile_success():
         os.unlink(tmpfile.name)
 
 def test_readFile_error():
-    with pytest.raises(errors_util.FileError):
+    with pytest.raises(file_util.FileError):
         file_util.readFile('does_not_exist.txt')
 
 def test_readListFromFile_normal():
@@ -117,7 +117,7 @@ def test_readListFromFile_empty():
         os.unlink(tmpfile.name)
 
 def test_readListFromFile_error():
-    with pytest.raises(errors_util.FileError):
+    with pytest.raises(file_util.FileError):
         file_util.readListFromFile('does_not_exist.txt') 
 
 def test_removeFilesOfTypes():

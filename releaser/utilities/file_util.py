@@ -4,9 +4,7 @@ import os
 import glob
 from pathlib import Path
 from typing import Optional
-
-from releaser.utilities import errors_util
-from . import helpers, time_util
+from . import helpers, time_util, errors_util
 
 _logger = logging.getLogger(__name__)
 
@@ -402,6 +400,9 @@ def readFile(path:str, encoding:str = "utf-8") -> str :
 
     Returns:
         str: The contents of the file, or "" if the file does not exist.
+        
+    Raises:
+        FileError: If the file cannot be read.
     """
     contents:str = ""
     try :
@@ -409,7 +410,7 @@ def readFile(path:str, encoding:str = "utf-8") -> str :
             contents = file.read()
         return contents
     except Exception as e :
-        raise errors_util.FileError(f"Failed to read file {path}: {e}")
+        raise FileError(f"Failed to read file {path}: {e}")
            
 
 def readListFromFile(path: str, encoding:str = "utf-8") -> list[str]:
@@ -423,7 +424,7 @@ def readListFromFile(path: str, encoding:str = "utf-8") -> list[str]:
         list[str]: List of patterns (stripped, non-empty, non-comment lines).
         
     Raises:
-        errors_util.FileError: If the file cannot be read.
+        FileError: If the file cannot be read.
     """
     listFromFile: list[str] = []
     
@@ -436,7 +437,7 @@ def readListFromFile(path: str, encoding:str = "utf-8") -> list[str]:
                 listFromFile.append(line)
         return listFromFile
     except Exception as e :
-        raise errors_util.FileError(f"Failed to read list from file {path}: {e}")
+        raise FileError(f"Failed to read list from file {path}: {e}")
 
 
 def removeFilesOfTypes(dir:str, types:list[str]) :
@@ -461,7 +462,10 @@ def removeFilesOfTypes(dir:str, types:list[str]) :
                     delete(path)
                     _logger.debug(f"Removed {path}")   
                 except Exception as e :
-                    raise errors_util.FileError(f"Failed to remove file {path}: {e}")
+                    raise FileError(f"Failed to remove file {path}: {e}")
                 
     _logger.debug(f"Removed files of types {types} from {dir}")
     
+
+class FileError(errors_util.UtilityError) :
+    """Raised by the file utility functions to indicate some issue."""

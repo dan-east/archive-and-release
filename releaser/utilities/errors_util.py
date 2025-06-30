@@ -6,18 +6,4 @@ class ProjectError(Exception):
 
     
 class UtilityError(ProjectError) :
-    """Raised by utility functions."""
-    
-
-
-
-
-class ZipError(UtilityError) :
-    """Raised by the zip utility functions to indicate some issue."""
-
-
-class FileError(UtilityError) :
-    """Raised by the file utility functions to indicate some issue."""
-    
-    
-
+    """Raised by utility functions.""" 

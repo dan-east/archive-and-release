@@ -3,7 +3,7 @@ from github.GitRelease import GitRelease
 from github.Repository import Repository
 import os
 from typing import Optional
-from releaser.utilities import errors_util
+from . import errors_util, git_util
 
 
 class GitHub() :
@@ -11,12 +11,15 @@ class GitHub() :
     Utility class for interacting with GitHub.
     """
 
-    def __init__(self) :
+    def __init__(self, git_repository:git_util.GitRepository) :
         self._token:str = self._getGitHubToken()
         self._github:Github = Github(auth=Auth.Token(self._token))
+        self._git_repository:git_util.GitRepository = git_repository
+        self._github_repository:Repository = self._github.get_repo(git_repository.getRepository())
+        
 
 
-    def getRepository(self, repo_name:str) -> Repository:
+    def getRepository(self, repo_name:str) -> GitRepository:
         return self._github.get_repo(repo_name)
     
     

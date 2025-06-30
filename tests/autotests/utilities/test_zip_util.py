@@ -3,7 +3,7 @@ import tempfile
 import os
 import zipfile
 from releaser.utilities import zip_util
-from releaser.utilities.errors_util import ZipError
+
 
 def create_test_directory_structure(base_dir):
     """Create a test directory structure with files and subdirectories."""
@@ -58,13 +58,13 @@ def test_zip_source_not_directory():
     """Test zip function with source that is not a directory."""
     with tempfile.NamedTemporaryFile() as tmpfile:
         with tempfile.TemporaryDirectory() as tmpdir:
-            with pytest.raises(ZipError):
+            with pytest.raises(zip_util.ZipError):
                 zip_util.zip(tmpfile.name, tmpdir, "test.zip")
 
 def test_zip_source_does_not_exist():
     """Test zip function with non-existent source directory."""
     with tempfile.TemporaryDirectory() as tmpdir:
-        with pytest.raises(ZipError):
+        with pytest.raises(zip_util.ZipError):
             zip_util.zip("does_not_exist", tmpdir, "test.zip")
 
 def test_zip_target_not_directory():
@@ -72,7 +72,7 @@ def test_zip_target_not_directory():
     with tempfile.TemporaryDirectory() as tmpdir:
         source_dir = create_test_directory_structure(tmpdir)
         with tempfile.NamedTemporaryFile() as tmpfile:
-            with pytest.raises(ZipError):
+            with pytest.raises(zip_util.ZipError):
                 zip_util.zip(source_dir, tmpfile.name, "test.zip")
 
 def test_unzip_success():
@@ -108,14 +108,14 @@ def test_unzip_invalid_zip():
             f.write("not a zip file")
         
         extract_dir = os.path.join(tmpdir, "extracted")
-        with pytest.raises(ZipError):
+        with pytest.raises(zip_util.ZipError):
             zip_util.unzip(not_zip, extract_dir)
 
 def test_unzip_missing_zip():
     """Test unzip function with non-existent zip file."""
     with tempfile.TemporaryDirectory() as tmpdir:
         extract_dir = os.path.join(tmpdir, "extracted")
-        with pytest.raises(ZipError):
+        with pytest.raises(zip_util.ZipError):
             zip_util.unzip("does_not_exist.zip", extract_dir)
 
 def test_unzip_target_is_file():
@@ -131,7 +131,7 @@ def test_unzip_target_is_file():
         with open(target_file, "w") as f:
             f.write("I am a file")
         
-        with pytest.raises(ZipError):
+        with pytest.raises(zip_util.ZipError):
             zip_util.unzip(zip_path, target_file)
 
 def test_isValidZipPath_true():
