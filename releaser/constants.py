@@ -1,0 +1,34 @@
+import os
+from .utilities import file_util
+
+# Constants for the Resolver application
+HOME_DIR:str = os.getenv("RELEASER_HOME", os.getcwd())
+
+# Default runtime directory
+RUNTIME_DIR:str = f"{HOME_DIR}/cloud-release-runtime"
+
+# Logging configuration
+LOG_DIR:str = os.getenv("RELEASER_LOG_DIR", RUNTIME_DIR)
+LOG_TO_FILE:str =f"{LOG_DIR}/releaser.log"
+
+# Repository URLs and branches for the releaser
+BACKEND_REPO_URL:str = os.getenv("RELEASER_BACKEND_REPO_URL", "https://github.com/EbaseServices/cloud-backend-builder")
+BACKEND_REPO_BRANCH:str = os.getenv("RELEASER_BACKEND_REPO_BRANCH", "main")
+FRONTEND_REPO_URL:str = os.getenv("RELEASER_FRONTEND_REPO_URL", "https://github.com/EbaseServices/cloud-frontend-builder")
+FRONTEND_REPO_BRANCH:str = os.getenv("RELEASER_FRONTEND_REPO_BRANCH", "main")
+
+# Directory to clone the repository to
+CLONE_DIR:str =os.getenv("RELEASER_CLONE_DIR", f"{RUNTIME_DIR}/clonedRepository")
+FRONTEND_CLONE_DIR:str =os.getenv("RELEASER_FRONTEND_CLONE_DIR", f"{CLONE_DIR}/frontend")
+BACKEND_CLONE_DIR:str =os.getenv("RELEASER_BACKEND_CLONE_DIR", f"{CLONE_DIR}/backend")
+
+
+# Directory to build the release to
+RELEASE_DIR:str =os.getenv("RELEASER_RELEASE_DIR", f"{RUNTIME_DIR}/release")
+
+# Default release names
+FRONTEND_RELEASE_NAME:str = os.getenv("RELEASER_FRONTEND_RELEASE_NAME", "frontend.zip")
+BACKEND_RELEASE_NAME:str = os.getenv("RELEASER_BACKEND_RELEASE_NAME", "backend.zip")
+
+# Pattern file - clean.txt is a sibling to constants.py
+CLEAN_PATTERNS_FILE:str = os.getenv("RELEASER_CLEAN_PATTERNS_FILE", file_util.buildPath(file_util.getParentDirectory(__file__), "clean.txt"))

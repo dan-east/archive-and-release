@@ -1,0 +1,4 @@
+GitPython
+PyGithub
+python-dotenv
+pytest

@@ -1,0 +1,13 @@
+[project]
+name = "release-builder"
+version = "0.1.0"
+description = "Builds a release for the front or backend of the cloud. It downloads a repository, prepares it, and zips it up ready to be added to a target server."
+
+readme = "README.md"
+requires-python = ">=3.11"
+
+[project.dependencies]
+dependencies = "requirements.txt"
+
+[project.optional-dependencies]
+dev-requirements = {file = "dev-requirements.txt"}
