@@ -107,7 +107,7 @@ def test_create_release_tag():
     
     git_repo = git_util.GitRepository("https://github.com/test/repo", mock_repo)
     
-    git_repo.createReleaseTag("v1.0.0", "Release version 1.0.0")
+    git_repo.createTag("v1.0.0", "Release version 1.0.0")
     
     mock_repo.create_tag.assert_called_once_with("v1.0.0", message="Release version 1.0.0")
     mock_repo.remote.assert_called_once_with('origin')

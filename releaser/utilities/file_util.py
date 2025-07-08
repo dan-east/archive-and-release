@@ -6,7 +6,7 @@ from pathlib import Path
 from typing import Optional
 from . import helpers, time_util, errors_util
 
-_logger = logging.getLogger(__name__)
+_logger:logging.Logger = logging.getLogger(__name__)
 
 def mkdir(dir:str, parents:bool = True, exist_ok:bool = True, mode:int = 511, user:Optional[str] = None, group:Optional[str] = None) :
     """

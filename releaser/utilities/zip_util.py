@@ -5,9 +5,9 @@ from zipfile import ZipFile
 from . import file_util
 from .errors_util import UtilityError
 
-_logger = logging.getLogger(__name__)
+_logger:logging.Logger = logging.getLogger(__name__)
 
-def zip(sourceDir:str, zipDir:str, zipName:str) :
+def zip(sourceDir:str, zipDir:str, zipName:str) -> str :
     """
     Zips the specified directory to the specified target directory.
 
@@ -15,29 +15,41 @@ def zip(sourceDir:str, zipDir:str, zipName:str) :
         sourceDir (str): The directory to zip.
         zipDir (str): The directory to place the zip file in.
         zipName (str): The name of the zip file.
+        
+    Returns:
+        str: The path to the zip file.
 
     Raises:    
         ZipError: If an error is encountered.
     """
     _logger.debug(f"Zipping {sourceDir} -> {zipDir}/{zipName}")
+    
+    # Validate the source and target directories
     _validateSourceDirectory(sourceDir)
     _validateTargetDirectory(zipDir)
 
+    # Create the path to the zip file
+    zip_path:str = f"{zipDir}/{zipName}"  
+
     # delete the zip file if it already exists
-    file_util.delete(f"{zipDir}/{zipName}") 
+    file_util.delete(zip_path) 
 
     # Convert to Path object
-    dir = Path(sourceDir)
-
+    dir:Path = Path(sourceDir)
+    
+    # Zip the directory
     try :
-        with _createZipFileForWrite(f"{zipDir}/{zipName}") as zip_file:
+        with _createZipFileForWrite(zip_path) as zip_file:
             for entry in dir.rglob("*"):
                 zip_file.write(entry, entry.relative_to(dir))
     except Exception as exc :
-        _logger.error(f"Unable to zip {sourceDir} -> {zipDir}/{zipName}", exc_info=True)
-        raise ZipError(f"Unable to zip {sourceDir} -> {zipDir}/{zipName}") from exc
+        _logger.error(f"Unable to zip {sourceDir} -> {zip_path}", exc_info=True)
+        raise ZipError(f"Unable to zip {sourceDir} -> {zip_path}") from exc
 
-    _logger.debug(f"Zipped {sourceDir} -> {zipDir}/{zipName}")
+    _logger.debug(f"Zipped {sourceDir} -> {zip_path}")
+    
+    # Return the path to the zip file
+    return zip_path
 
 
 def unzip(zipPath:str, targetDir:str) :
@@ -52,8 +64,12 @@ def unzip(zipPath:str, targetDir:str) :
         ZipError if an error is encountered.
     """
     _logger.debug(f"Unzipping {zipPath} -> {targetDir}")
+    
+    # Validate the zip file and target directory
     _validateZipPath(zipPath)
     _validateTargetDirectory(targetDir)
+    
+    # Make the target directory in case it doesn't exist.
     file_util.mkdir(targetDir, mode=0o744) # make target directory in case it doesn't exist.
     try :
         with _createZipFileForRead(zipPath) as zip :

@@ -1,18 +1,26 @@
 import logging
+from _pytest._py.error import R
 from git import Repo, TagReference
+from git.util import T
 from .errors_util import UtilityError
 from . import helpers, file_util
 
 # Logging
-_logger = logging.getLogger(__name__)  # module name
+_logger:logging.Logger = logging.getLogger(__name__)
 
 
 class GitRepository() :
     """
     Utility class for interacting with Git.
+    
+    Args:
+        repo_url (str): The URL of the Git repository to clone.
+        repository (Repo): The repository object.
     """
 
     def __init__(self, repo_url:str, repository:Repo) :
+        helpers.assertSet(_logger, "GitRepository::The repository URL is not set", repo_url)
+        helpers.assertSet(_logger, "GitRepository::The repository is not set", repository)
         self._repo_url:str = repo_url
         self._repository:Repo = repository
         
@@ -65,7 +73,7 @@ class GitRepository() :
         Raises:
             GitError: If the repository cannot be cloned.
         """
-        if helpers.isValidUrl(repo_url) :
+        if helpers.hasValue(repo_url) and helpers.isValidUrl(repo_url) :
             if helpers.hasValue(clone_target_dir) and file_util.isDir(clone_target_dir) :
                 _logger.debug(f"Cloning repository from {repo_url} to {clone_target_dir}")
                 try:
@@ -93,23 +101,31 @@ class GitRepository() :
         _logger.debug(f"Submodules initialized in {self._repository.working_dir}") 
         
         
-    def createReleaseTag(self, release_name:str, release_description:str) :
+    def createTag(self, tag_name:str, tag_description:str = "") :
         """
         Create a new tag in the given repository.
 
         Args:
-            release_name (str): The name of the release to create.
-            release_description (str): The description of the release to create.
+            tag_name (str): The name of the tag to create.
+            tag_description (str): The description of the tag to create.
+            
+        Raises:
+            GitError: If the tag cannot be created (for example the tag already exists)
         """
-        _logger.debug(f"Creating tag {release_name} in {self._repository.working_dir}...")
+        helpers.assertSet(_logger, "GitRepository::The tag name is not set", tag_name)
+        _logger.debug(f"Creating tag {tag_name} in {self._repository.working_dir}...")
+
+        try :
+            # Create the tag
+            tag:TagReference = self._repository.create_tag(tag_name, message=tag_description)
+            
+            # Push to the remote repository
+            self._repository.remote('origin').push(tag.path)
+        except Exception as e:
+            _logger.error(f"Failed to create tag {tag_name} in {self._repository.working_dir}: {e}")
+            raise GitError(f"Failed to create tag {tag_name} in {self._repository.working_dir}") from e
         
-        # Create the tag
-        tag:TagReference = self._repository.create_tag(release_name, message=release_description)
-        
-        # Push to the remote repository
-        self._repository.remote('origin').push(tag.path)
-        
-        _logger.debug(f"Tag {release_name} created and pushed to origin")
+        _logger.debug(f"Tag {tag_name} created and pushed to origin")
         
         
     def archive(self, archive_name:str, archive_format:str = "zip") -> str :
