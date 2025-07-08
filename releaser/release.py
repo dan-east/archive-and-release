@@ -363,11 +363,15 @@ def _createTag(repository:git_util.GitRepository, tag_name:str, tag_description:
     _logger.info(f"...created tag {tag_name} in {repository.getRepository().working_dir}")
     
     
-# the entry point
-try :
-    if __name__ == "__main__" :
+def main() :
+    try :
         _init()
         _commandRunner()
-except Exception :
-    _logger.error(f"Command caught an exception (may not be harmful): {traceback.format_exc()}")
-    raise
+    except Exception :
+        _logger.error(f"Command caught an exception (may not be harmful): {traceback.format_exc()}")
+        raise
+    
+    
+# the entry point
+if __name__ == "__main__" :
+    main()

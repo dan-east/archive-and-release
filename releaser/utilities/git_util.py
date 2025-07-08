@@ -1,5 +1,4 @@
 import logging
-from _pytest._py.error import R
 from git import Repo, TagReference
 from git.util import T
 from .errors_util import UtilityError
