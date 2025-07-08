@@ -3,17 +3,17 @@ from datetime import datetime, timedelta
 
 _logger:logging.Logger = logging.getLogger(__name__)
 
-def getCurrentDateTimeString(format:str = "%d/%m/%Y %H:%M:%S") :
+def getCurrentDateTimeString(date_format:str = "%d/%m/%Y %H:%M:%S") :
     """
     Returns the current date and time as a formatted string.
 
     Args:
-        format (_type_, optional): The format string to use for formatting the date and time. Defaults to "%d/%m/%Y %H:%M:%S".
+        date_format (str, optional): The format string to use for formatting the date and time. Defaults to "%d/%m/%Y %H:%M:%S".
 
     Returns:
-        _type_: A string representing the current date and time formatted according to the specified format.
+        str: A string representing the current date and time formatted according to the specified format.
     """
-    return datetime.now().strftime(format)
+    return datetime.now().strftime(date_format)
 
 
 def howOld(timestamp:float) -> timedelta:

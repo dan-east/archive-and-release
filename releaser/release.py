@@ -95,7 +95,7 @@ def _buildRepository(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default="main")
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=f"archive-{time_util.getCurrentDateTimeString(format="%Y%m%d")}.zip") 
+    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=f"archive-{time_util.getCurrentDateTimeString(date_format="%Y%m%d")}.zip")
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.set_defaults(func=_buildCommand)
 
@@ -106,7 +106,7 @@ def _buildAndRelease(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default="main")
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=f"archive-{time_util.getCurrentDateTimeString(format="%Y%m%d")}.zip")  
+    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=f"archive-{time_util.getCurrentDateTimeString(date_format="%Y%m%d")}.zip")
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.add_argument("--tag_version", help='The name of the tag to create. E.g. v1.0.1. Cannot be the same as a previous tag version.', required=True)
     runner.add_argument("--tag_description", help='The description of the tag to create.', required=True)

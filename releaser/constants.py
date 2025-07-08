@@ -27,8 +27,8 @@ BACKEND_CLONE_DIR:str =os.getenv("RELEASER_BACKEND_CLONE_DIR", f"{CLONE_DIR}/bac
 RELEASE_DIR:str =os.getenv("RELEASER_RELEASE_DIR", f"{RUNTIME_DIR}/release")
 
 # Default release names
-FRONTEND_RELEASE_NAME:str = os.getenv("RELEASER_FRONTEND_RELEASE_NAME", f"frontend-{time_util.getCurrentDateTimeString(format="%Y%m%d")}.zip")
-BACKEND_RELEASE_NAME:str = os.getenv("RELEASER_BACKEND_RELEASE_NAME", f"backend-{time_util.getCurrentDateTimeString(format="%Y%m%d")}.zip")
+FRONTEND_RELEASE_NAME:str = os.getenv("RELEASER_FRONTEND_RELEASE_NAME", f"frontend-{time_util.getCurrentDateTimeString(date_format="%Y%m%d")}.zip")
+BACKEND_RELEASE_NAME:str = os.getenv("RELEASER_BACKEND_RELEASE_NAME", f"backend-{time_util.getCurrentDateTimeString(date_format="%Y%m%d")}.zip")
 
 # Pattern file - clean.txt is a sibling to constants.py
 CLEAN_PATTERNS_FILE:str = os.getenv("RELEASER_CLEAN_PATTERNS_FILE", file_util.buildPath(file_util.getParentDirectory(__file__), "clean.txt"))
