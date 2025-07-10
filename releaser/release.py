@@ -34,7 +34,7 @@ def _commandRunner() :
 
 # Builds the frontend release.
 def _buildFrontend(subparsers) :
-    runner = subparsers.add_parser("build_frontend", help="Builds the frontend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    runner = subparsers.add_parser("build-frontend", help="Builds the frontend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     runner.add_argument("--repo", "-r", help='The repo to clone', default=constants.FRONTEND_REPO_URL)
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.FRONTEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.FRONTEND_CLONE_DIR)
@@ -46,7 +46,7 @@ def _buildFrontend(subparsers) :
 
 # Builds and releases the frontend.
 def _buildAndReleaseFrontend(subparsers) :
-    runner = subparsers.add_parser("release_frontend", help="Builds and releases the frontend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    runner = subparsers.add_parser("release-frontend", help="Builds and releases the frontend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     runner.add_argument("--repo", "-r", help='The repo to clone', default=constants.FRONTEND_REPO_URL)
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.FRONTEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.FRONTEND_CLONE_DIR)
@@ -62,7 +62,7 @@ def _buildAndReleaseFrontend(subparsers) :
 
 # Builds the backend release.
 def _buildBackend(subparsers) :
-    runner = subparsers.add_parser("build_backend", help="Builds the backend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    runner = subparsers.add_parser("build-backend", help="Builds the backend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     runner.add_argument("--repo", "-r", help='The repo to clone', default=constants.BACKEND_REPO_URL)
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.BACKEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.BACKEND_CLONE_DIR)
@@ -74,7 +74,7 @@ def _buildBackend(subparsers) :
 
 # Builds and releases the backend.
 def _buildAndReleaseBackend(subparsers) :
-    runner = subparsers.add_parser("release_backend", help="Builds and releases the backend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    runner = subparsers.add_parser("release-backend", help="Builds and releases the backend release.", formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     runner.add_argument("--repo", "-r", help='The repo to clone', default=constants.BACKEND_REPO_URL)
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.BACKEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.BACKEND_CLONE_DIR)
