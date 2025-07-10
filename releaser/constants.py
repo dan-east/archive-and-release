@@ -5,7 +5,7 @@ from .utilities import file_util, time_util
 HOME_DIR:str = os.getenv("RELEASER_HOME", os.getcwd())
 
 # Default runtime directory
-RUNTIME_DIR:str = f"{HOME_DIR}/cloud-release-runtime"
+RUNTIME_DIR:str = os.getenv("RELEASER_RUNTIME_DIR", f"{HOME_DIR}/script-release-builder-runtime")
 
 # Logging configuration
 LOG_DIR:str = os.getenv("RELEASER_LOG_DIR", RUNTIME_DIR)
