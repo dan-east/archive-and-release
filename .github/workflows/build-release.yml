@@ -34,6 +34,12 @@ jobs:
           dist/*.whl
           dist/*.tar.gz
 
+    - name: Upload distribution files as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-dists
+        path: dist/
+
 
 # This workflow will upload a Python Package to PyPI when a release is created
   pypi-publish:
