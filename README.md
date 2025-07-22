@@ -1,36 +1,52 @@
 # archive-and-release
 
-! More detail is coming !
-Imagine you have a number of scripts in a repository. Maybe they help to build an entire suite of servers. 
-Perhaps they are written in bash, or just a collection of files that somehow work together to acheive your goals.
-Importantly, they don't represent an application like a python cli appliction for example.
+## Description
+Imagine you have a number of scripts in a repository. 
+
+Perhaps they a load of bash script and other files that build a suite of services on a number of services.
+
+Importantly, they don't represent a buildable application in the usual sense (like a python cli application for example.)
+
 Perhaps there is method and structure to your madness and the repository is built up of a number of submodules (and some are private...).
-Unless you want to put a personal token into your github actions (usually seen as a bad idea), these submodules can't be accessed in them.
-So this cli can help. 
 
-Locally, you can specify your personal token that can see all submodule repositories in a local virual environment, install this package into it and:
-1. Package a remote repository (e.g. on github) and archive them (perhaps into a zip).
-2. Package a remote repository (e.g. on github) and archive them (perhaps into a zip), tag (and push) the git repository, create a release from the tag and upload the archive to the release.
+Things like GitActions can't access other private repositories, unless you add a GitHub Token to them (usually seen as a bad idea).
 
-In both cases you can choose to 'clean' the repository before archiving it by removing a number of wildcarded files and folders (for example .git) that is not required in a target server.
+This cli can help with this.
 
-Install:
-pip install archive-and-release
+Locally, you can specify your personal token that can see all submodule repositories in a local virtual environment, install this package into it and:
 
-Commands:
-Full options/help:
-archive-and-release -h
+1. Locally create an archive (e.g. zip) of a remote repository containing any number of nested submodules.
+2. Create an archive of a remote repository, tag (and push) the git repository, create a GitHub release from the tag and upload the archive to the release.
 
-Command options/help:
-archive-and-release <cmd> -h
+In both cases you can choose to 'clean' (i.e. remove files and folders matching a pattern, for example '.git') the repository prior to creating the archive.
 
-To build a release file:
-archive-and-release build_frontend
-archive-and-release build_backend
-archive-and-releasee build --repo "https://github.com/<repository_owner>/<repository_name>" --branch main --repo_target_dir "<clone_target_dir>" --release_target_dir "<created_release_target_dir>" --release_file_name "<created_release_file_name>"
+## Installation
+`pip install archive-and-release`
+
+## Commands
+
+### Full options/help
+`archive-and-release -h`
+
+### Command options/help
+`archive-and-release <cmd> -h`
+
+### Examples to build an archive
+`archive-and-release build_frontend`
+`archive-and-release build_backend`
+`archive-and-release build --repo "https://github.com/<repository_owner>/<repository_name>" --branch main --repo_target_dir "<clone_target_dir>" --release_target_dir "<created_release_target_dir>" --release_file_name "<created_release_file_name>" --clean_patterns "<path_to_patterns_file>"` 
+
+### Examples to build, tag and create a github release:
+`archive-and-release release_frontend --tag_version "<tag_version>" --tag_description "<tag_description>"`
+`archive-and-release release_backend --tag_version "<tag_version>" --tag_description "<tag_description>" --release_version "<release_version>" --release_description "<release_description>"`
+`archive-and-release release --repo "https://github.com/<repository_owner>/<repository_name>" --branch main --repo_target_dir "<clone_target_dir>" --release_target_dir "<created_release_target_dir>" --release_file_name "<created_release_file_name>" --clean_patterns "<path_to_patterns_file>" --tag_version "<tag_version>" --tag_description "<tag_description>"`
 
 
-To build, create a tag and create a release:
-archive-and-release release_frontend --tag_version "<tag_version>" --tag_description "<tag_description>"
-archive-and-release release_backend --tag_version "<tag_version>" --tag_description "<tag_description>" --release_version "<release_version>" --release_description "<release_description>"
-archive-and-release release --repo "https://github.com/<repository_owner>/<repository_name>" --branch main --repo_target_dir "<clone_target_dir>" --release_target_dir "<created_release_target_dir>" --release_file_name "<created_release_file_name>" --tag_version "<tag_version>" --tag_description "<tag_description>"
+## Configuration
+There are a number of environment variables that can be used to control the app, or simply create a .env in the directory where you run archive-and-release from.
+
+See the [.env.example](https://github.com/dan-east/archive-and-release/blob/main/.env.example) for more details.
+
+
+## Frontend and Backend
+There are commands that build the 'frontend' and 'backend' (for example `build_frontend` and `release_backend`). These are short cuts for the `build` and `release` commands and don't do anything special.
