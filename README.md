@@ -13,7 +13,7 @@ Things like GitActions can't access other private repositories, unless you add a
 
 This cli can help with this.
 
-Locally, you can specify your personal token that can see all submodule repositories in a local virtual environment, install this package into it and:
+Locally, you can specify a github token that can see all submodule repositories in a local virtual environment, install this package into it and:
 
 1. Locally create an archive (e.g. zip) of a remote repository containing any number of nested submodules.
 2. Create an archive of a remote repository, tag (and push) the git repository, create a GitHub release from the tag and upload the archive to the release.
@@ -21,7 +21,15 @@ Locally, you can specify your personal token that can see all submodule reposito
 In both cases you can choose to 'clean' (i.e. remove files and folders matching a pattern, for example '.git') the repository prior to creating the archive.
 
 ## Installation
+### Create a virtual environment (optional)
+`python3 -m venv .env/archive-and-release` (or any directory location you like)</br>
+`. .env/archive-and-release/bin/activate`
+
+### Install archive-and-release
 `pip install archive-and-release`
+
+### Exit the virtual environment
+`deactivate`
 
 ## Commands
 
@@ -33,12 +41,16 @@ In both cases you can choose to 'clean' (i.e. remove files and folders matching 
 
 ### Examples to build an archive
 `archive-and-release build_frontend`
+
 `archive-and-release build_backend`
+
 `archive-and-release build --repo "https://github.com/<repository_owner>/<repository_name>" --branch main --repo_target_dir "<clone_target_dir>" --release_target_dir "<created_release_target_dir>" --release_file_name "<created_release_file_name>" --clean_patterns "<path_to_patterns_file>"` 
 
 ### Examples to build, tag and create a github release:
 `archive-and-release release_frontend --tag_version "<tag_version>" --tag_description "<tag_description>"`
+
 `archive-and-release release_backend --tag_version "<tag_version>" --tag_description "<tag_description>" --release_version "<release_version>" --release_description "<release_description>"`
+
 `archive-and-release release --repo "https://github.com/<repository_owner>/<repository_name>" --branch main --repo_target_dir "<clone_target_dir>" --release_target_dir "<created_release_target_dir>" --release_file_name "<created_release_file_name>" --clean_patterns "<path_to_patterns_file>" --tag_version "<tag_version>" --tag_description "<tag_description>"`
 
 
