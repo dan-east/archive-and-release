@@ -3,7 +3,6 @@
 import argparse
 import logging
 import traceback
-import dotenv
 
 from releaser.utilities import github_util, helpers, log_util, git_util, file_util, zip_util, errors_util, time_util
 import releaser.constants as constants
@@ -14,7 +13,6 @@ _logger:logging.Logger = logging.getLogger(__name__)
 
 # Sets up the whole shebang
 def _init() :
-    dotenv.load_dotenv()
     log_util.setupRootLogging(constants.LOG_TO_FILE)
 
 

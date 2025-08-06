@@ -1,5 +1,9 @@
 import os
+import dotenv
 from .utilities import file_util, time_util
+
+# Load environment variables from .env file
+dotenv.load_dotenv()
 
 # A repository is needed, but not defined.
 UNDEFINED_REPOSITORY:str = "Repository undefined."
