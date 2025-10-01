@@ -16,7 +16,7 @@ RUNTIME_DIR:str = os.getenv("RELEASER_RUNTIME_DIR", f"{HOME_DIR}/archive-and-rel
 
 # Logging configuration
 LOG_DIR:str = os.getenv("RELEASER_LOG_DIR", RUNTIME_DIR)
-LOG_TO_FILE:str =f"{LOG_DIR}/releaser.log"
+LOG_TO_FILE:str = f"{LOG_DIR}/releaser.log"
 
 # Repository URLs and branches for the releaser.
 BACKEND_REPO_URL:str = os.getenv("RELEASER_BACKEND_REPO_URL", UNDEFINED_REPOSITORY)
@@ -25,13 +25,13 @@ FRONTEND_REPO_URL:str = os.getenv("RELEASER_FRONTEND_REPO_URL", UNDEFINED_REPOSI
 FRONTEND_REPO_BRANCH:str = os.getenv("RELEASER_FRONTEND_REPO_BRANCH", "main")
 
 # Directory to clone the repository to
-CLONE_DIR:str =os.getenv("RELEASER_CLONE_DIR", f"{RUNTIME_DIR}/clonedRepository")
-FRONTEND_CLONE_DIR:str =os.getenv("RELEASER_FRONTEND_CLONE_DIR", f"{CLONE_DIR}/frontend")
-BACKEND_CLONE_DIR:str =os.getenv("RELEASER_BACKEND_CLONE_DIR", f"{CLONE_DIR}/backend")
+CLONE_DIR:str = os.getenv("RELEASER_CLONE_DIR", f"{RUNTIME_DIR}/clonedRepository")
+FRONTEND_CLONE_DIR:str = os.getenv("RELEASER_FRONTEND_CLONE_DIR", f"{CLONE_DIR}/frontend")
+BACKEND_CLONE_DIR:str = os.getenv("RELEASER_BACKEND_CLONE_DIR", f"{CLONE_DIR}/backend")
 
 
 # Directory to build the release to
-RELEASE_DIR:str =os.getenv("RELEASER_RELEASE_DIR", f"{RUNTIME_DIR}/release")
+RELEASE_DIR:str = os.getenv("RELEASER_RELEASE_DIR", f"{RUNTIME_DIR}/release")
 
 # Default release names
 FRONTEND_RELEASE_NAME:str = os.getenv("RELEASER_FRONTEND_RELEASE_NAME", f"frontend-{time_util.getCurrentDateTimeString(date_format='%Y%m%d')}.zip")

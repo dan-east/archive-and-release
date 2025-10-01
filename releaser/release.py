@@ -38,7 +38,7 @@ def _buildFrontend(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.FRONTEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.FRONTEND_CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME) 
+    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME)
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.set_defaults(func=_buildCommand)
 
@@ -50,7 +50,7 @@ def _buildAndReleaseFrontend(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.FRONTEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.FRONTEND_CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME) 
+    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME)
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.add_argument("--tag_version", help='The name of the tag to create. E.g. v1.0.1. Cannot be the same as a previous tag version.', required=True)
     runner.add_argument("--tag_description", help='The description of the tag to create.', required=True)
@@ -66,7 +66,7 @@ def _buildBackend(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.BACKEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.BACKEND_CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME) 
+    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.BACKEND_RELEASE_NAME)
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.set_defaults(func=_buildCommand)
 
@@ -78,7 +78,7 @@ def _buildAndReleaseBackend(subparsers) :
     runner.add_argument("--branch", "-b", help='The branch to use', default=constants.BACKEND_REPO_BRANCH)
     runner.add_argument("--repo_target_dir", "-c", help='Where to clone the repo to (warning: existing directories will be emptied first)', default=constants.BACKEND_CLONE_DIR)
     runner.add_argument("--release_target_dir", "-t", help='Where to put the zipped release', default=constants.RELEASE_DIR)
-    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.FRONTEND_RELEASE_NAME)  
+    runner.add_argument("--release_file_name", "-f", help='The name to use.', default=constants.BACKEND_RELEASE_NAME)
     runner.add_argument("--clean_patterns", "-p", help='A path to a file containing a list of files to be removed from the repository prior to creating the release.', default=constants.CLEAN_PATTERNS_FILE)
     runner.add_argument("--tag_version", help='The name of the tag to create. E.g. v1.0.1. Cannot be the same as a previous tag version.', required=True)
     runner.add_argument("--tag_description", help='The description of the tag to create.', required=True)
@@ -199,7 +199,7 @@ def _buildAndReleaseToGitHub(repository_url:str, repository_branch:str, reposito
     helpers.assertSet(_logger, "_buildAndReleaseToGitHub::release_description not set", release_description)
 
     _logger.info(f"Building release for {repository_url}:{repository_branch}")
-    
+
     # Clone the repository from the given path
     repository:git_util.GitRepository = _cloneRepository(repository_url=repository_url, repository_branch=repository_branch, repository_target_dir=repository_target_dir)
 
@@ -277,7 +277,7 @@ def _prepareRepositoryTargetDirectory(repository_target_dir:str) :
     _logger.info(f"Preparing repository target directory: {repository_target_dir}")
 
     if file_util.exists(repository_target_dir) :
-        if not file_util.isDir(repository_target_dir) : 
+        if not file_util.isDir(repository_target_dir) :
             raise errors_util.ProjectError(f"{repository_target_dir} is not a directory.")
         _logger.info(f"Deleting contents of {repository_target_dir}")
         file_util.deleteContents(repository_target_dir)
@@ -297,7 +297,7 @@ def _buildRelease(repository_target_dir:str, patterns_file:str, release_target_d
         patterns_file (str): Path to a file containing patterns of files to remove before creating the release.
         release_target_dir (str): The directory to place the release in.
         release_target_name (str): The name of the release file.
-        
+
     Returns:
         str: The path to the zip file.
     """
@@ -308,7 +308,7 @@ def _buildRelease(repository_target_dir:str, patterns_file:str, release_target_d
 
     # Clean the repository
     _cleanRepository(repository_target_dir=repository_target_dir, patterns_file=patterns_file)
-    
+
     # Zip the repository - this is where the actual build happens
     return _zipRepository(repository_target_dir=repository_target_dir, release_target_dir=release_target_dir, release_target_name=release_target_name)
 
@@ -325,9 +325,9 @@ def _prepareReleaseTargetDirectory(release_target_dir:str) :
     """
     helpers.assertSet(_logger, "_prepareReleaseTargetDirectory::release_target_dir not set", release_target_dir)
     _logger.info(f"Preparing release target directory: {release_target_dir}")
-    
+
     if file_util.exists(release_target_dir) :
-        if not file_util.isDir(release_target_dir) : 
+        if not file_util.isDir(release_target_dir) :
             raise errors_util.ProjectError(f"{release_target_dir} is not a directory.")
     else :
         _logger.info(f"Creating directory: {release_target_dir}")
@@ -355,7 +355,7 @@ def _zipRepository(repository_target_dir:str, release_target_dir:str, release_ta
         repository_target_dir (str): The directory to zip.
         release_target_dir (str): The directory to place the zip file in.
         release_target_name (str): The name of the zip file.
-        
+
     Returns:
         str: The path to the zip file.
     """
